@@ -34,10 +34,10 @@ public class HomeController extends Controller {
     }
 
     public Result airForce() {
-        var downloader = new Downloader( "https://www.nike.com/pl/w/mezczyzni-air-force-1-buty-5sj3yznik1zy7ok");
-        downloader.printConfig();
         var configReader = new JsonConfigReader("nike_scrapper.json");
         configReader.getConfig();
+        var downloader = new Downloader(configReader.Configurations());
+        downloader.printScrappedProducts();
         return ok(downloader.htmlString().title());
     }
 }

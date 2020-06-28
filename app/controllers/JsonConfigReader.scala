@@ -31,4 +31,5 @@ class JsonConfigReader(path: String) extends IConfigReader {
       case None => println("could not read the file")
     }
   }
+  def Configurations: ListOfElementModels[ElementModel] = listOfElementModels
 }
