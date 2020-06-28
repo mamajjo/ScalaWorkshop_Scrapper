@@ -36,8 +36,8 @@ public class HomeController extends Controller {
     public Result airForce() {
         var configReader = new JsonConfigReader("nike_scrapper.json");
         configReader.getConfig();
-        var downloader = new Downloader(configReader.Configurations());
+        var downloader = new Downloader(configReader.MultipleConfigurations());
         downloader.printScrappedProducts();
-        return ok(downloader.htmlString().title());
+        return ok(downloader.htmlString().last().title());
     }
 }

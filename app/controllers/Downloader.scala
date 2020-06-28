@@ -5,21 +5,22 @@ import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.model.Document
 
-class Downloader (config: ListOfElementModels[ElementModel]) {
+class Downloader (config: ListOfRootModels[ListOfElementModels[ElementModel]]) {
   val browser: Browser = JsoupBrowser()
-  val _htmlDocument: browser.DocumentType = browser.get(config.url)
+  val _htmlDocument: List[browser.DocumentType] = config.list.map(configuration => browser.get(configuration.url))
 
-  def htmlString: Document = _htmlDocument
+  def htmlString: List[Document] = _htmlDocument
 
   def printScrappedProducts(): Unit = {
     config.list.foreach(elem => {
-      elem.cssTag match {
-        case "class" =>
-          elem.dataType
-          val tagValue = "." + elem.cssValue
-          println(htmlString >> text(tagValue))
-        case _ => new Exception("Blad")
-      }
+      elem.list.foreach(e => {
+        e.cssTag match {
+          case "class" =>
+            val tagValue = "." + e.cssValue
+            println(htmlString >> text(tagValue))
+          case _ => new Exception("Blad")
+        }
+      })
     })
   }
 

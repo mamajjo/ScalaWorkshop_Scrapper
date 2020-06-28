@@ -1,5 +1,7 @@
-{
-  "url": "https://www.nike.com/pl/w/mezczyzni-air-force-1-buty-5sj3yznik1zy7ok",
+[
+  {
+  "name": "air_force",
+  "url": "https://www.nike.com/pl/w?q=shorts&vst=shorts",
   "tags": [
     {
       "cssTag": "class",
@@ -12,4 +14,21 @@
       "dataType": "text"
     }
   ]
-}
+  },
+  {
+    "name": "air_force",
+    "url": "https://www.nike.com/pl/w/mezczyzni-air-force-1-buty-5sj3yznik1zy7ok",
+    "tags": [
+      {
+        "cssTag": "class",
+        "cssValue": "product-card__title",
+        "dataType": "text"
+      },
+      {
+        "cssTag": "class",
+        "cssValue": "product-card__price",
+        "dataType": "text"
+      }
+    ]
+  }
+]

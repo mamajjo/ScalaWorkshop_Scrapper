@@ -28,24 +28,50 @@ object ElementModelJsonProtocol extends DefaultJsonProtocol {
 object ListOfElementModelJsonProtocol extends DefaultJsonProtocol {
 
   implicit object ListOfModelJsonFormat extends RootJsonFormat[ListOfElementModels[ElementModel]] {
-    override def read(json: JsValue): ListOfElementModels[ElementModel] = {
-      json.asJsObject.getFields("url", "tags") match {
-        case Seq(JsString(url), JsArray(tags)) =>
-          var elements = new ListBuffer[ElementModel]()
-          tags.foreach(json => json.asJsObject.getFields("cssTag", "cssValue", "dataType") match {
-            case Seq(JsString(cssTag), JsString(cssValue), JsString(dataType)) =>
-              elements += new ElementModel(cssTag, cssValue, dataType)
-            case _ => throw DeserializationException("ElementModel Expected")
-          })
-          new ListOfElementModels[ElementModel](url, elements.toList)
-        case _ => throw DeserializationException("ListOfElementModel Expected")
-      }
+    override def read(json: JsValue): ListOfElementModels[ElementModel] = json match {
+      case jsObj: JsObject =>
+        jsObj.getFields("name", "url", "tags") match {
+          case Seq(JsString(name), JsString(url), JsArray(tags)) =>
+            var elements = new ListBuffer[ElementModel]()
+            tags.foreach(json => json.asJsObject.getFields("cssTag", "cssValue", "dataType") match {
+              case Seq(JsString(cssTag), JsString(cssValue), JsString(dataType)) =>
+                elements += new ElementModel(cssTag, cssValue, dataType)
+              case _ => throw DeserializationException("ElementModel Expected")
+            })
+            new ListOfElementModels[ElementModel](name, url, elements.toList)
+        }
     }
 
     override def write(obj: ListOfElementModels[ElementModel]): JsValue = JsObject(
+      "name" -> JsString(obj.name),
       "url" -> JsString(obj.url),
       "tags" -> JsArray(obj.list.map(elem => ElementModelJsonProtocol.ModelJsonFormat.write(elem)).toVector)
     )
   }
 
+}
+object ListOfRootJsonProtocol extends DefaultJsonProtocol {
+
+  implicit object ListOfModelJsonFormat extends RootJsonFormat[ListOfRootModels[ListOfElementModels[ElementModel]]] {
+    override def read(json: JsValue): ListOfRootModels[ListOfElementModels[ElementModel]] = json match {
+      case jsArr: JsArray =>
+        val listOfElements = new ListBuffer[ListOfElementModels[ElementModel]]
+        jsArr.elements.foreach(jsObj => {
+          jsObj.asJsObject.getFields("name", "url", "tags") match {
+            case Seq(JsString(name), JsString(url), JsArray(tags)) =>
+              var elements = new ListBuffer[ElementModel]()
+              tags.foreach(json => json.asJsObject.getFields("cssTag", "cssValue", "dataType") match {
+                case Seq(JsString(cssTag), JsString(cssValue), JsString(dataType)) =>
+                  elements += new ElementModel(cssTag, cssValue, dataType)
+                case _ => throw DeserializationException("ElementModel Expected")
+              })
+              listOfElements.append(new ListOfElementModels[ElementModel](name, url, elements.toList))
+          }
+        })
+        new ListOfRootModels[ListOfElementModels[ElementModel]](listOfElements.toList)
+      case _ => throw DeserializationException("ListOfElementModel Expected")
+        }
+
+    override def write(obj: ListOfRootModels[ListOfElementModels[ElementModel]]): JsValue = ???
+  }
 }
