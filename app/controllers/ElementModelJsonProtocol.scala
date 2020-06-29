@@ -54,6 +54,19 @@ object ListOfRootJsonProtocol extends DefaultJsonProtocol {
 
   implicit object ListOfModelJsonFormat extends RootJsonFormat[ListOfRootModels[ListOfElementModels[ElementModel]]] {
     override def read(json: JsValue): ListOfRootModels[ListOfElementModels[ElementModel]] = json match {
+      case jsObj: JsObject =>
+        val listOfElements = new ListBuffer[ListOfElementModels[ElementModel]]
+        jsObj.getFields("name", "url", "tags") match {
+          case Seq(JsString(name), JsString(url), JsArray(tags)) =>
+            var elements = new ListBuffer[ElementModel]()
+            tags.foreach(json => json.asJsObject.getFields("cssTag", "cssValue", "dataType") match {
+              case Seq(JsString(cssTag), JsString(cssValue), JsString(dataType)) =>
+                elements += new ElementModel(cssTag, cssValue, dataType)
+              case _ => throw DeserializationException("ElementModel Expected")
+            })
+            listOfElements.append(new ListOfElementModels[ElementModel](name, url, elements.toList))
+        }
+        new ListOfRootModels[ListOfElementModels[ElementModel]](listOfElements.toList)
       case jsArr: JsArray =>
         val listOfElements = new ListBuffer[ListOfElementModels[ElementModel]]
         jsArr.elements.foreach(jsObj => {
