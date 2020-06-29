@@ -5,7 +5,7 @@ import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
 import net.ruippeixotog.scalascraper.model.Document
 
-class Downloader (config: ListOfRootModels[ListOfElementModels[ElementModel]]) {
+class Downloader (config: ListOfScraperRecipes[ScraperRecipe[HTMLElementModel]]) {
   val browser: Browser = JsoupBrowser()
   val _htmlDocument: List[browser.DocumentType] = config.list.map(configuration => browser.get(configuration.url))
 

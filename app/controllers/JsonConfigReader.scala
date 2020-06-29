@@ -3,15 +3,15 @@ package controllers
 import java.nio.file.{Path, Paths}
 
 import controllers.Control._
-import controllers.ListOfRootJsonProtocol._
+import controllers.ListOfScraperRecipesJsonProtocol._
 import spray.json._
 
 import scala.io.Source
 
 
 class JsonConfigReader(path: String) extends IConfigReader {
-  var listOfElementModels = new ListOfElementModels[ElementModel]("", url="", List[ElementModel]())
-  var listOfRootModels =  new ListOfRootModels[ListOfElementModels[ElementModel]](List(new ListOfElementModels[ElementModel]("", url="", List[ElementModel]())))
+  var listOfElementModels = new ScraperRecipe[HTMLElementModel]("", url="", List[HTMLElementModel]())
+  var listOfRootModels =  new ListOfScraperRecipes[ScraperRecipe[HTMLElementModel]](List(new ScraperRecipe[HTMLElementModel]("", url="", List[HTMLElementModel]())))
 
   override def loadConfig(): Option[String] = {
     val relative: Path = Paths.get(path)
@@ -29,11 +29,11 @@ class JsonConfigReader(path: String) extends IConfigReader {
     loadConfig() match {
       case Some(configFileContents) =>
         val jsonAst = configFileContents.parseJson
-        listOfRootModels = jsonAst.convertTo[ListOfRootModels[ListOfElementModels[ElementModel]]]
+        listOfRootModels = jsonAst.convertTo[ListOfScraperRecipes[ScraperRecipe[HTMLElementModel]]]
       case None => println("could not read the file")
     }
   }
-  def Configurations: ListOfElementModels[ElementModel] = listOfElementModels
+  def Configurations: ScraperRecipe[HTMLElementModel] = listOfElementModels
 
-  def MultipleConfigurations: ListOfRootModels[ListOfElementModels[ElementModel]] = listOfRootModels
+  def MultipleConfigurations: ListOfScraperRecipes[ScraperRecipe[HTMLElementModel]] = listOfRootModels
 }
