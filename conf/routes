@@ -7,7 +7,7 @@ GET     /                           controllers.HomeController.index
 GET    /explore                     controllers.HomeController.explore
 GET    /tutorial                    controllers.HomeController.tutorial
 GET    /hello                       controllers.HomeController.hello
-GET    /air_force                   controllers.HomeController.airForce
+GET    /scraper                     controllers.HomeController.scraper
 
 
 # Map static resources from the /public folder to the /assets URL path

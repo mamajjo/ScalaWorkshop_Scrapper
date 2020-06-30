@@ -1,5 +1,4 @@
-package controllers
-import scala.language.reflectiveCalls
+package utils
 
 object Control {
   def using[A <: { def close(): Unit }, B](resource: A)(f: A => B): B =

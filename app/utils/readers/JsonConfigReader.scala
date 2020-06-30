@@ -1,10 +1,11 @@
-package controllers
+package utils.readers
 
 import java.nio.file.{Path, Paths}
 
-import controllers.Control._
-import controllers.ListOfScraperRecipesJsonProtocol._
+import models.{HTMLElementModel, ListOfScraperRecipes, ScraperRecipe}
 import spray.json._
+import utils.Control._
+import utils.readers.ListOfScraperRecipesJsonProtocol._
 
 import scala.io.Source
 

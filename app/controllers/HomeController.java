@@ -1,9 +1,14 @@
 package controllers;
 
-import play.api.Configuration;
+import akka.japi.Pair;
+import models.ScrapedDataModel;
 import play.mvc.*;
+import scala.Tuple2;
+import scala.collection.immutable.List;
+import utils.Downloader;
+import utils.readers.JsonConfigReader;
 
-import javax.inject.Inject;
+import java.util.ArrayList;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -20,11 +25,11 @@ public class HomeController extends Controller {
     public Result index() {
         return ok(views.html.index.render());
     }
-    
+
     public Result explore() {
         return ok(views.html.explore.render());
     }
-    
+
     public Result tutorial() {
         return ok(views.html.tutorial.render());
     }
@@ -33,11 +38,17 @@ public class HomeController extends Controller {
         return ok(views.html.hello.render());
     }
 
-    public Result airForce() {
+    public Result scraper() {
         var configReader = new JsonConfigReader("nike_scrapper.json");
         configReader.getConfig();
-        var downloader = new Downloader(configReader.MultipleConfigurations());
-        downloader.printScrappedProducts();
-        return ok(downloader.htmlString().last().title());
+        List<ScrapedDataModel> scrappedData = Downloader.getHtmlDocumentsList(configReader.MultipleConfigurations());
+        ArrayList<Tuple2<String, String>> scrapedString = new ArrayList<>();
+        for (int i = 0; i < scrappedData.length(); i++ ) {
+            var temp = scrappedData.apply(i).getPrettyStringMap();
+            for (int j = 0; j < temp.length(); j++ ) {
+                scrapedString.add(temp.apply(j));
+            }
+        }
+        return ok(views.html.scraperResults.render(scrapedString));
     }
 }
