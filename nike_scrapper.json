@@ -12,11 +12,6 @@
       "cssTag": "class",
       "cssValue": "product-card__price",
       "dataType": "text"
-    },
-    {
-      "cssTag": "class",
-      "cssValue": "product-card__subtitle",
-      "dataType": "text"
     }
   ]
   },
