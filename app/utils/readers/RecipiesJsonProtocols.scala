@@ -35,6 +35,7 @@ object ScraperRecipeJsonProtocol extends DefaultJsonProtocol {
           case Seq(JsString(name), JsString(url), JsArray(tags)) =>
             val tagsForHTMLElem = tags.map(tag => HTMLElementModelJsonProtocol.HTMLElementModelJsonFormat.read(tag)).toList
             new ScraperRecipe[HTMLElementModel](name, url, tagsForHTMLElem)
+          case _ => throw DeserializationException("Invalid ScraperRecipe")
         }
     }
 
