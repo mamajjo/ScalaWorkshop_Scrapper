@@ -15,7 +15,7 @@ case class ListOfScraperRecipes[A](list: List[A])
 
 class ScrapedDataModel(val recipeList: ScraperRecipe[HTMLElementModel], val downloadedDocument: Document) {
   def getPrettyStringMap: List[(String, String)] = {
-    var list = ListBuffer[(String, String)]()
+    val list = ListBuffer[(String, String)]()
     recipeList.list.foreach(tags => {
       tags match {
         case HTMLElementModel(cssTag, cssValue, dataType) if cssTag=="class" && dataType == "text" =>

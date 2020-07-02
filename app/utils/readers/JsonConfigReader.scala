@@ -1,6 +1,6 @@
 package utils.readers
 
-import java.nio.file.{Path, Paths}
+import java.nio.file.{NoSuchFileException, Path, Paths}
 
 import models.{HTMLElementModel, ListOfScraperRecipes, ScraperRecipe}
 import spray.json._
@@ -22,7 +22,7 @@ class JsonConfigReader(path: String) extends IConfigReader {
       }}
       Some(configFileContents)
     } catch {
-      case e: Exception => None
+      case e: NoSuchFileException => None
     }
   }
 
