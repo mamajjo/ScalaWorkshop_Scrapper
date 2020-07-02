@@ -1,4 +1,4 @@
-# Play Hello World Web Tutorial for Java
+# Play Hello World Web Tutorial for Scala
 
 To follow the steps in this tutorial, you will need the correct version of Java and a build tool. You can build Play projects with any Java build tool. Since sbt takes advantage of Play features such as auto-reload, the tutorial describes how to build the project with sbt. 
 
@@ -26,10 +26,14 @@ This example Play project was created from a seed template. It includes all Play
 
 To build and run the project:
 
-1. Use a command window to change into the example project directory, for example: `cd play-java-hello-world-web`
+1. Use a command window to change into the example project directory, for example: `cd scrapper`
 
 2. Build the project. Enter: `sbt run`. The project builds and starts the embedded HTTP server. Since this downloads libraries and dependencies, the amount of time required depends partly on your connection's speed.
 
 3. After the message `Server started, ...` displays, enter the following URL in a browser: <http://localhost:9000>
 
-The Play application responds: `Welcome to the Hello World Tutorial!`
+4. Run test via sbt tool: sbt test
+
+## Extracted Data
+
+nike_scraper.json file provides recipes for scraping data. Implemented using nike.com

@@ -1,4 +1,4 @@
-package controllers
+package utils.readers
 
 trait IConfigReader {
   def loadConfig():Option[String]

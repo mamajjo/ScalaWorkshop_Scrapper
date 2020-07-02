@@ -1,7 +1,7 @@
 [
   {
   "name": "air_force",
-  "url": "https://www.nike.com/pl/w?q=shorts&vst=shorts",
+  "url": "https://www.nike.com/pl/w/mezczyzni-wyprzedaz-3yaepznik1",
   "tags": [
     {
       "cssTag": "class",
@@ -27,6 +27,11 @@
       {
         "cssTag": "class",
         "cssValue": "product-card__price",
+        "dataType": "text"
+      },
+      {
+        "cssTag": "class",
+        "cssValue": "product-card__subtitle",
         "dataType": "text"
       }
     ]
