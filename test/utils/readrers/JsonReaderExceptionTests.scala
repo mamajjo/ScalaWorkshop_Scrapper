@@ -67,21 +67,23 @@ class JsonReaderExceptionTests extends PlaySpec{
       |  }
       |]""".stripMargin
 
-  "HTMLElement invalid -> should throw DeserializationException" in {
-    val jsonAstInvalid: JsValue = jsonHTMLElementMockInvalid.parseJson
-    a[DeserializationException] must be thrownBy{
-      jsonAstInvalid.convertTo[ListOfScraperRecipes[ScraperRecipe[HTMLElementModel]]]
+  "Throwing exception when json is invalid" must {
+    "throw DeserializationException -> HTMLElement invalid" in {
+      val jsonAstInvalid: JsValue = jsonHTMLElementMockInvalid.parseJson
+      a[DeserializationException] must be thrownBy{
+        jsonAstInvalid.convertTo[ListOfScraperRecipes[ScraperRecipe[HTMLElementModel]]]
+      }
     }
-  }
-  "ScraperRecipe invalid -> should throw DeserializationException" in {
-    val jsonAstInvalid: JsValue = jsonScraperRecipeMockInvalid.parseJson
-    a[DeserializationException] must be thrownBy{
-      jsonAstInvalid.convertTo[ListOfScraperRecipes[ScraperRecipe[HTMLElementModel]]]
+    "throw DeserializationException -> ScraperRecipe invalid " in {
+      val jsonAstInvalid: JsValue = jsonScraperRecipeMockInvalid.parseJson
+      a[DeserializationException] must be thrownBy{
+        jsonAstInvalid.convertTo[ListOfScraperRecipes[ScraperRecipe[HTMLElementModel]]]
+      }
     }
-  }
-  "Json invalid -> should throw DeserializationException" in {
-    a[ParsingException] must be thrownBy{
-      jsonInvalid.parseJson
+    "throw DeserializationException -> Json invalid" in {
+      a[ParsingException] must be thrownBy{
+        jsonInvalid.parseJson
+      }
     }
   }
 }

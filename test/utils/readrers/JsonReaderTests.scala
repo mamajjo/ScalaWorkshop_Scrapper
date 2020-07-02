@@ -99,7 +99,7 @@ class JsonReaderTests extends PlaySpec{
     else new ListOfScraperRecipes[ScraperRecipe[HTMLElementModel]](listOfScraperModels)
   }
 
-  "Json must be correctly parsed" must {
+  "Json read from string" should {
     "be a single object json" in {
       val jsonAstObject: JsValue = jsonMockObject.parseJson
       val listOfScraperModelsObject: ListOfScraperRecipes[ScraperRecipe[HTMLElementModel]] = jsonAstObject.convertTo[ListOfScraperRecipes[ScraperRecipe[HTMLElementModel]]]

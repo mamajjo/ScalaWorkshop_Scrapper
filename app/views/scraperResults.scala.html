@@ -1,13 +1,21 @@
 @(dataMap: List[(String,String)])
 
+@splitData(text: String) = @{
+        text.split('|')
+}
+
 @main("Scraper Results") {
     @defining(play.core.PlayVersion.current) { version =>
       <section id="content">
-          <ul>
+          <table>
           @for(ele <- dataMap) {
-            <li>@ele._1 -> @ele._2</li>
+              <tr>
+                @for( data <- splitData({ ele._2})) {
+                  <td>@data</td>
+                }
+              </tr>
           }
-          </ul>
+          </table>
       </section>
     }
 }
