@@ -37,6 +37,7 @@ object ScraperRecipeJsonProtocol extends DefaultJsonProtocol {
             new ScraperRecipe[HTMLElementModel](name, url, tagsForHTMLElem)
           case _ => throw DeserializationException("Invalid ScraperRecipe")
         }
+      case _ => throw DeserializationException("Invalid ScraperRecipe")
     }
 
     override def write(obj: ScraperRecipe[HTMLElementModel]): JsValue = JsObject(
